@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### 补丁文件 ###
+/patchs/

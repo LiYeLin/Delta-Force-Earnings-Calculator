@@ -1,8 +1,8 @@
 package com.sjz.lcsjz;
 
 
-import com.sjz.lcsjz.common.dal.mapper.ItemMapper; 
 
+import com.sjz.lcsjz.core.service.IItemsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class DatabaseConnectionTester implements CommandLineRunner {
 
     // 注入您的Mapper接口
     @Autowired
-    private ItemMapper itemMapper;
+    private IItemsService itemService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -27,8 +27,8 @@ public class DatabaseConnectionTester implements CommandLineRunner {
         try {
             // 我们调用一个最简单的Mapper方法来强制Spring初始化数据库连接池。
             // selectCount会执行一条 "SELECT COUNT(*) FROM market_data.items" SQL语句。
-            Long count = itemMapper.selectCount(null);
-            
+            long count = itemService.count();
+
             // 如果上面这行代码没有抛出异常，就证明连接成功了！
             log.info("************************************************************");
             log.info("数据库连接成功！");
