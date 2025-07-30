@@ -1,13 +1,17 @@
 package com.sjz.lcsjz;
 
 
-
+import com.sjz.lcsjz.common.integration.kkrb.KkrbClient;
+import com.sjz.lcsjz.common.integration.model.ItemPriceFlow;
+import com.sjz.lcsjz.common.integration.model.KkrbResp;
 import com.sjz.lcsjz.core.service.IItemsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 应用启动时执行，用于测试并强制初始化数据库连接。
@@ -20,6 +24,9 @@ public class DatabaseConnectionTester implements CommandLineRunner {
     // 注入您的Mapper接口
     @Autowired
     private IItemsService itemService;
+
+    @Autowired
+    private KkrbClient kkrbClient;
 
     @Override
     public void run(String... args) throws Exception {
@@ -34,7 +41,6 @@ public class DatabaseConnectionTester implements CommandLineRunner {
             log.info("数据库连接成功！");
             log.info("在 'items' 表中找到 {} 条记录。", count);
             log.info("************************************************************");
-
         } catch (Exception e) {
             log.error("************************************************************");
             log.error("数据库连接失败！请检查您的配置或网络。", e);
