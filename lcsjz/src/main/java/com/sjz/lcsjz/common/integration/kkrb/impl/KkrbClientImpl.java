@@ -24,7 +24,7 @@ import java.util.Map;
 @Component
 public class KkrbClientImpl implements KkrbClient {
     private static final Logger log = LoggerFactory.getLogger(KkrbClientImpl.class);
-    final String pageUrl = "https://www.kkrb725.com/?viewpage=view%2Fcollection%2Fammo_package";
+    private static final String pageUrl = "https://www.kkrb725.com/?viewpage=view%2Fcollection%2Fammo_package";
 
     @Resource
     private RestClient kkrbRestClient;
@@ -49,7 +49,7 @@ public class KkrbClientImpl implements KkrbClient {
         formData.add("version", version);
 
         String coreData = kkrbRestClient.post()
-                .uri("/getAmmoPackageData")
+                .uri("/getAmmoPLData")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .headers(headers -> {
                     headers.set("accept", "*/*");
@@ -68,7 +68,6 @@ public class KkrbClientImpl implements KkrbClient {
             if (resp == null || resp.getCode() != 1 || resp.getData() == null) {
                 throw new RuntimeException("获取物品价格流水失败");
             }
-            log.info("获取物品价格流水成功, resp: {}", objectMapper.writeValueAsString(resp));
             return resp;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
