@@ -3,6 +3,7 @@ package com.sjz.lcsjz.common.dal.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -43,6 +44,7 @@ public class PriceTicks implements Serializable {
      * 价格的精确时间点
      */
     @ApiModelProperty("价格的精确时间点")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime tickAt;
 
     /**
@@ -50,8 +52,8 @@ public class PriceTicks implements Serializable {
      */
     @ApiModelProperty("该时间点的价格")
     private BigDecimal price;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtCreate;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtModified;
 }

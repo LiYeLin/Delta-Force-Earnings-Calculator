@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * <p>
@@ -63,4 +64,30 @@ public class Items implements Serializable {
      */
     @ApiModelProperty("记录最后修改时间")
     private LocalDateTime gmtModified;
+
+    /**
+     * 判断当前对象是否与另一个对象相等
+     * @param o 要比较的另一个对象
+     * @return 如果两个对象相等则返回true，否则返回false
+     */
+    @Override
+    public boolean equals(Object o) {
+        // 如果另一个对象为空或者类型不一致，则两个对象不相等
+        if (o == null || getClass() != o.getClass())
+            return false;
+        // 将另一个对象转换为当前对象的类型
+        Items items = (Items) o;
+        // 使用Objects类的equals方法比较三个属性是否 all equal
+        return Objects.equals(itemName, items.itemName) && Objects.equals(grade, items.grade) && Objects.equals(picUrl, items.picUrl);
+    }
+
+    /**
+     * 返回当前对象的哈希码
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemName, grade, picUrl);
+    }
 }

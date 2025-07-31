@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -29,11 +31,17 @@ public class KkrbClientImpl implements KkrbClient {
     @Resource
     private ObjectMapper objectMapper;
 
-    @Override
     /**
      * 获取物品价格流水
+     *
      * @return 包含物品价格流水的KkrbResp对象
      */
+    @Retryable(
+            retryFor = {RuntimeException.class},
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000, multiplier = 2)
+    )
+    @Override
     public KkrbResp<List<ItemPriceFlow>> getItemPriceFlow() {
         String version = getVersion();
         // 准备 application/x-www-form-urlencoded 格式的 body
@@ -55,8 +63,13 @@ public class KkrbClientImpl implements KkrbClient {
                 .body(String.class);
 
         try {
-            return objectMapper.readValue(coreData, new TypeReference<KkrbResp<List<ItemPriceFlow>>>() {
+            KkrbResp<List<ItemPriceFlow>> resp = objectMapper.readValue(coreData, new TypeReference<>() {
             });
+            if (resp == null || resp.getCode() != 1 || resp.getData() == null) {
+                throw new RuntimeException("获取物品价格流水失败");
+            }
+            log.info("获取物品价格流水成功, resp: {}", objectMapper.writeValueAsString(resp));
+            return resp;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +96,8 @@ public class KkrbClientImpl implements KkrbClient {
         String body = responseEntity.getBody();
         Map<String, Object> menuData = null;
         try {
-            menuData = objectMapper.readValue(body, new TypeReference<>() {});
+            menuData = objectMapper.readValue(body, new TypeReference<>() {
+            });
         } catch (JsonProcessingException e) {
             log.error("从menu中处理字段失败", e);
         }

@@ -1,7 +1,7 @@
-package com.sjz.lcsjz.core.service;
+package com.sjz.lcsjz.core.service.market;
 
-import com.sjz.lcsjz.common.dal.entity.MarketSnapshots;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sjz.lcsjz.common.dal.entity.MarketSnapshots;
 
 /**
  * <p>

@@ -1,6 +1,9 @@
 package com.sjz.lcsjz.common.integration.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class KkrbResp<T> {
@@ -16,4 +19,9 @@ public class KkrbResp<T> {
      * 状态信息，描述操作结果的详细信息
      */
     private String msg;
+    /**
+     * fixme 版本号 小时级别 需要更新到表里
+     */
+    @JsonFormat(pattern = "yyyyMMddHH")
+    private LocalDateTime version;
 }

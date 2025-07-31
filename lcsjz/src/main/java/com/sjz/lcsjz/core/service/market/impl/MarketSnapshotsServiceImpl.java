@@ -1,9 +1,9 @@
-package com.sjz.lcsjz.core.service.impl;
+package com.sjz.lcsjz.core.service.market.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sjz.lcsjz.common.dal.entity.MarketSnapshots;
 import com.sjz.lcsjz.common.dal.mapper.MarketSnapshotsMapper;
-import com.sjz.lcsjz.core.service.IMarketSnapshotsService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sjz.lcsjz.core.service.market.IMarketSnapshotsService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,9 +1,10 @@
 package com.sjz.lcsjz.common.integration.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -23,64 +24,67 @@ public class ItemPriceFlow {
     /**
      * 商品等级
      */
-    private int grade;
+    private Integer grade;
     /**
      * 当前价格（含税）
      */
-    @JsonProperty("currentPrice")
-    private double currentPrice;
+    @JsonProperty("currectPrice")
+    private BigDecimal currentPrice;
     /**
      * 本周最高价（含税）
      */
-    private double thisWeekHighestPrice;
+    private BigDecimal thisWeekHighestPrice;
     /**
      * 本周最高价（税后）
      */
-    private double thisWeekHighestPriceAfterTax;
+    private BigDecimal thisWeekHighestPriceAfterTax;
     /**
      * 本周最高价出现时间（格式：yyyy-MM-dd HH:mm:ss）
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime thisWeekHighestDatetime;
     /**
      * 本周价格涨跌幅（相比上周）
      */
-    private double thisWeekPriceOffset;
+    private BigDecimal thisWeekPriceOffset;
     /**
      * 上周最高价（含税）
      */
-    private double lastWeekHighestPrice;
+    private BigDecimal lastWeekHighestPrice;
     /**
      * 上周最高价（税后）
      */
-    private double lastWeekHighestPriceAfterTax;
+    private BigDecimal lastWeekHighestPriceAfterTax;
     /**
      * 上周最高价出现时间（格式：yyyy-MM-dd HH:mm:ss）
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastWeekHighestDatetime;
     /**
      * 上周最低价（含税）
      */
-    private double lastWeekLowestPrice;
+    private BigDecimal lastWeekLowestPrice;
     /**
      * 上周最低价（税后）
      */
-    private double lastWeekLowestPriceAfterTax;
+    private BigDecimal lastWeekLowestPriceAfterTax;
     /**
      * 上周最低价出现时间（格式：yyyy-MM-dd HH:mm:ss）
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastWeekLowestDatetime;
     /**
      * 上周价格涨跌幅
      */
-    private double lastWeekPriceOffset;
+    private BigDecimal lastWeekPriceOffset;
     /**
      * 昨日最高价（含税）
      */
-    private double yesterdayHighestPrice;
+    private BigDecimal yesterdayHighestPrice;
     /**
      * 昨日最高价（税后）
      */
-    private double yesterdayHighestPriceAfterTax;
+    private BigDecimal yesterdayHighestPriceAfterTax;
     /**
      * 昨日最高价出现时间（自然语言描述，如"凌晨0点"）
      */
@@ -88,11 +92,11 @@ public class ItemPriceFlow {
     /**
      * 昨日最低价（含税）
      */
-    private double yesterdayLowestPrice;
+    private BigDecimal yesterdayLowestPrice;
     /**
      * 昨日最低价（税后）
      */
-    private double yesterdayLowestPriceAfterTax;
+    private BigDecimal yesterdayLowestPriceAfterTax;
     /**
      * 昨日最低价出现时间（自然语言描述，如"晚上8点"）
      */
@@ -100,13 +104,13 @@ public class ItemPriceFlow {
     /**
      * 昨日价格涨跌幅（含税）
      */
-    private double yesterdayPriceOffset;
+    private BigDecimal yesterdayPriceOffset;
     /**
      * 昨日价格涨跌幅（不含税）
      */
-    private double yesterdayPriceOffsetWithoutTax;
+    private BigDecimal yesterdayPriceOffsetWithoutTax;
     /**
      * 价格曲线数据（Key为时间戳格式yyyyMMddHH，Value为价格）
      */
-    private Map<String, String> priceCurve;
+    private Map<String, BigDecimal> priceCurve;
 }

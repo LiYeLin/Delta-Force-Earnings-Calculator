@@ -1,7 +1,7 @@
-package com.sjz.lcsjz.core.service;
+package com.sjz.lcsjz.core.service.market;
 
-import com.sjz.lcsjz.common.dal.entity.Items;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sjz.lcsjz.common.dal.entity.Items;
 
 /**
  * <p>
@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IItemsService extends IService<Items> {
 
+    /**
+     * 保存商品信息
+     *
+     * @param item 商品对象
+     * @return 返回保存后的商品ID
+     */
+    Long saveItem(Items item);
 }

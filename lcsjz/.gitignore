@@ -34,3 +34,4 @@ build/
 
 ### 补丁文件 ###
 /patchs/
+/src/main/resources/application-local.properties
