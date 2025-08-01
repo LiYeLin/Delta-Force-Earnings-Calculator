@@ -19,4 +19,5 @@ public class LcsjzApplication {
 		SpringApplication.run(LcsjzApplication.class, args);
 		log.info("启动成功");
 	}
+
 }
