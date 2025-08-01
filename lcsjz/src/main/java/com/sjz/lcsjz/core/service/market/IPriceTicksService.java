@@ -20,5 +20,5 @@ public interface IPriceTicksService extends IService<PriceTicks> {
      * @param priceTicksList 价格数据列表
      * @return 保存是否成功
      */
-    Boolean savePriceTicksBatch(List<PriceTicks> priceTicksList);
+    void savePriceTicksBatch(List<PriceTicks> priceTicksList);
 }

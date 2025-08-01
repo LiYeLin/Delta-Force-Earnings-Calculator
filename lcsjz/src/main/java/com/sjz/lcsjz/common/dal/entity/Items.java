@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /**
@@ -57,13 +57,13 @@ public class Items implements Serializable {
      * 记录创建时间
      */
     @ApiModelProperty("记录创建时间")
-    private LocalDateTime gmtCreate;
+    private OffsetDateTime gmtCreate;
 
     /**
      * 记录最后修改时间
      */
     @ApiModelProperty("记录最后修改时间")
-    private LocalDateTime gmtModified;
+    private OffsetDateTime gmtModified;
 
     /**
      * 判断当前对象是否与另一个对象相等

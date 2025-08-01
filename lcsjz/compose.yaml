@@ -1,9 +1,18 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+  app:
+    # build: . 指示 Docker Compose 使用当前目录下的 Dockerfile 来构建镜像
+    build: .
+    # 为容器命名，方便管理
+    container_name: sjz-lc
+    # 设置重启策略，除非手动停止，否则容器总会尝试重启
+    restart: unless-stopped
     ports:
-      - '5432'
+      # 将云服务器的 8080 端口映射到容器的 8080 端口
+      - "8080:8080"
+    environment:
+      # 关键：激活 'prod' profile，让 Spring Boot 加载 application-prod.properties
+      - SPRING_PROFILES_ACTIVE=prod
+      # 关键：从 .env 文件中读取密码并注入
+      - DB_PASSWORD=${DB_PASSWORD}
