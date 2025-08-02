@@ -41,3 +41,7 @@ build/
 /logs/*.log.*
 /patchs/
 /lcsjz/src/main/resources/application-local.properties
+/logs/
+/target/
+/logs/
+/logs/
