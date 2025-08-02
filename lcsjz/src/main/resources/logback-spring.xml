@@ -54,7 +54,7 @@
         <file>${LOG_PATH}/dal.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/dal.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <maxHistory>3</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
@@ -105,7 +105,7 @@
         </logger>
 
         <!-- 定时任务日志记录器 -->
-        <logger name="com.sjz.lcsjz.core.scheduler.MyExampleTask" level="INFO" additivity="false">
+        <logger name="com.sjz.lcsjz.core.service.schedule" level="INFO" additivity="false">
             <appender-ref ref="CONSOLE"/> <!-- 【修改】同时输出到控制台 -->
             <appender-ref ref="SCHEDULER_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
