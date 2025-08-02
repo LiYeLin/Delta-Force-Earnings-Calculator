@@ -32,8 +32,9 @@ jobs:
           
           # 通过 SSH 在远程服务器上执行一连串的命令
           ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} '
+            set -e
             # 进入项目目录
-            cd/home/data/sjz
+            cd /home/data/sjz
 
             # 拉取 master 分支的最新代码
             echo ">>> 1. Pulling latest code..."
