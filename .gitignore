@@ -36,12 +36,9 @@ build/
 /patchs/
 /src/main/resources/application-local.properties
 
-/.idea/
-/logs/**.log
-/logs/*.log.*
-/patchs/
+.idea/
+logs/**.log
+logs/*.log.*
 /lcsjz/src/main/resources/application-local.properties
 /logs/
 /target/
-/logs/
-/logs/
