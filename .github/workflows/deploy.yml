@@ -40,25 +40,27 @@ jobs:
             # 进入项目目录
             cd /home/data/sjz/SJZ-LC
 
-            # 拉取 main 分支的最新代码
+            # 1 拉取 main 分支的最新代码
             echo ">>> 1. Pulling latest code..."
             git pull origin main
 
-            # 将 GitHub Secrets 中的 .env 内容写入到服务器的 .env 文件中
+            # 2 将 GitHub Secrets 中的 .env 内容写入到服务器的 .env 文件中
             echo ">>> 2. Creating .env file..."
             echo "${{ secrets.DOT_ENV_CONTENT }}" > .env
 
-            # 使用 Maven 进行打包
+            # 3 使用 Maven 进行打包
             echo ">>> 3. Packaging with Maven..."
             mvn clean package -DskipTests
+          
+            # 第4步: 停止并移除同名的旧容器 (如果存在)
+            echo ">>> 4. Removing old container if it exists..."
+            docker stop sjz-lc && docker rm sjz-lc || true
 
-            # 使用 Docker Compose 重启服务
-            # --build 会强制重新构建镜像
-            # -d 会在后台运行
+            # 5 使用 Docker Compose 重启服务 --build 会强制重新构建镜像-d 会在后台运行 
             echo ">>> 4. Restarting services with Docker Compose..."
             docker-compose up --build -d
 
-            # 清理无用的旧镜像，释放磁盘空间
+            # 6 清理无用的旧镜像，释放磁盘空间
             echo ">>> 5. Pruning old Docker images..."
             docker image prune -f
 
