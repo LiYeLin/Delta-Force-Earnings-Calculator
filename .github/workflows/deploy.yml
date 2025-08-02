@@ -53,13 +53,10 @@ jobs:
             mvn clean package -DskipTests
           
             # 第4步: 停止并移除同名的旧容器 (如果存在)
-            # 这是一个更安全、更精准的操作，不会影响其他容器
             echo ">>> 4. Removing old container if it exists..."
             docker stop sjz-lc && docker rm sjz-lc || true
 
-            # 5 使用 Docker Compose 重启服务
-            # --build 会强制重新构建镜像
-            # -d 会在后台运行
+            # 5 使用 Docker Compose 重启服务 --build 会强制重新构建镜像-d 会在后台运行 
             echo ">>> 4. Restarting services with Docker Compose..."
             docker-compose up --build -d
 
