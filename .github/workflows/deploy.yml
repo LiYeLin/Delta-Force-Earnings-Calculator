@@ -27,15 +27,16 @@ jobs:
       # 第2步：通过 SSH 连接到服务器并执行部署脚本
       - name: Deploy to Server
         run: |
-          # 这一步是让 GitHub Runner 信任你的服务器，保持不变
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-          
+
           # 添加服务器到已知主机，避免首次连接的交互提示
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
           
           # 通过 SSH 在远程服务器上执行一连串的命令
           ssh ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} '
             set -e
+            # 在执行 git pull 之前，先将 github.com 的主机密钥添加到服务器的 known_hosts 文件中
+            echo ">>> 0. Adding GitHub.com to known hosts..."
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
             # 进入项目目录
             cd /home/data/sjz/SJZ-LC
 
