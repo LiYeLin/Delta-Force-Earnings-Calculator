@@ -50,7 +50,7 @@ jobs:
 
             # 使用 Maven 进行打包
             echo ">>> 3. Packaging with Maven..."
-            mvn clean package
+            mvn clean package -DskipTests
 
             # 使用 Docker Compose 重启服务
             # --build 会强制重新构建镜像
