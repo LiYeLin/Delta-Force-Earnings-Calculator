@@ -24,7 +24,7 @@ import java.util.Map;
 @Component
 public class KkrbClientImpl implements KkrbClient {
     private static final Logger log = LoggerFactory.getLogger(KkrbClientImpl.class);
-    final String pageUrl = "https://www.kkrb725.com/?viewpage=view%2Fcollection%2Fammo_package";
+    private static final String pageUrl = "https://www.kkrb725.com/?viewpage=view%2Fcollection%2Fammo_package";
 
     @Resource
     private RestClient kkrbRestClient;

@@ -12,6 +12,7 @@ import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -42,7 +43,6 @@ public class PriceTicksServiceImpl extends ServiceImpl<PriceTicksMapper, PriceTi
      *
      * @param priceTicksList 待处理的价格数据列表
      */
-    @Transactional(rollbackFor = Exception.class) // 关键点1：添加事务注解，保证操作的原子性
     public void savePriceTicksBatch(List<PriceTicks> priceTicksList) {
         if (CollectionUtils.isEmpty(priceTicksList)) {
             return;
@@ -94,13 +94,19 @@ public class PriceTicksServiceImpl extends ServiceImpl<PriceTicksMapper, PriceTi
 
             PriceTicks existTick = existingTicksMap.get(key);
 
-            if (existTick != null && !existTick.getPrice().equals(incomingTick.getPrice())) { //  价格不同，需要更新
-                BigDecimal oldPrice = existTick.getPrice();
-                existTick.setPrice(incomingTick.getPrice()); // 直接修改从数据库查出来的对象
-                updateList.add(existTick);
-                log.info("【价格快照】物品'{}' 时间点{} 待更新, 旧价格{}, 新价格{}", itemName, incomingTick.getTickAt(), oldPrice, incomingTick.getPrice());
-            } else { // 如果记录不存在，需要插入
+            if (existTick == null) {
+                // 情况一: 记录不存在，加入插入列表
                 insertList.add(incomingTick);
+            } else {
+                // 情况二: 记录已存在，需要进一步判断价格
+                if (!existTick.getPrice().equals(incomingTick.getPrice())) {
+                    // 价格不同，加入更新列表
+                    BigDecimal oldPrice = existTick.getPrice();
+                    existTick.setPrice(incomingTick.getPrice()); // 修改从数据库查出来的持久化对象
+                    updateList.add(existTick);
+                    log.info("【价格快照】物品'{}' 时间点{} 待更新, 旧价格{}, 新价格{}", itemName, incomingTick.getTickAt(), oldPrice, incomingTick.getPrice());
+                }
+                // 情况三: 价格相同，什么都不做，直接跳过
             }
         }
         // --- 步骤3：批量执行数据库操作 (最多2次DB写入) ---

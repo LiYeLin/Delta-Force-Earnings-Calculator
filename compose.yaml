@@ -16,3 +16,9 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
       # 关键：从 .env 文件中读取密码并注入
       - DB_PASSWORD=${DB_PASSWORD}
+      # 通过设置TZ环境变量来指定时区
+      - TZ=Asia/Shanghai
+    volumes:
+      # 将宿主机当前目录下的 logs 文件夹 映射到 容器内的 /app/logs 文件夹
+      # 语法: <宿主机路径>:<容器内路径>
+      - ./logs:/app/logs
