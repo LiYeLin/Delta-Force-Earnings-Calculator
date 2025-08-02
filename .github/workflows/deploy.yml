@@ -3,7 +3,7 @@
 # Workflow 的名称
 name: Deploy to Tencent Cloud
 
-# 触发条件：当有代码 push 到 master 分支时触发
+# 触发条件：当有代码 push 到 main 分支时触发
 on:
   push:
     branches:
@@ -40,9 +40,9 @@ jobs:
             # 进入项目目录
             cd /home/data/sjz/SJZ-LC
 
-            # 拉取 master 分支的最新代码
+            # 拉取 main 分支的最新代码
             echo ">>> 1. Pulling latest code..."
-            git pull origin master
+            git pull origin main
 
             # 将 GitHub Secrets 中的 .env 内容写入到服务器的 .env 文件中
             echo ">>> 2. Creating .env file..."
