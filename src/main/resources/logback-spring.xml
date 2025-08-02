@@ -85,7 +85,7 @@
         </logger>
 
         <!-- 定时任务日志，本地只输出到控制台 -->
-        <logger name="com.sjz.lcsjz.core.scheduler.MyExampleTask" level="INFO" additivity="false">
+        <logger name="com.sjz.lcsjz.core.service.schedule" level="INFO" additivity="false">
             <appender-ref ref="CONSOLE"/>
         </logger>
 
