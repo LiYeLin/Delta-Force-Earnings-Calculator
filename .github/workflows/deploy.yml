@@ -7,7 +7,7 @@ name: Deploy to Tencent Cloud
 on:
   push:
     branches:
-      - master
+      - main
 
 # 定义一个名为 'deploy' 的任务
 jobs:
