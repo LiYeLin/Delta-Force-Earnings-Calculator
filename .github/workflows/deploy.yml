@@ -27,6 +27,9 @@ jobs:
       # 第2步：通过 SSH 连接到服务器并执行部署脚本
       - name: Deploy to Server
         run: |
+          # 这一步是让 GitHub Runner 信任你的服务器，保持不变
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          
           # 添加服务器到已知主机，避免首次连接的交互提示
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
           
