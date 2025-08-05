@@ -1,6 +1,9 @@
+# 使用 YAML 3.8 版本规范
 version: '3.8'
 
+# 定义所有的服务
 services:
+  # ------------------ 你的 Spring Boot 应用服务 ------------------
   app:
     # build: . 指示 Docker Compose 使用当前目录下的 Dockerfile 来构建镜像
     build: .
@@ -14,7 +17,8 @@ services:
     environment:
       # 关键：激活 'prod' profile，让 Spring Boot 加载 application-prod.properties
       - SPRING_PROFILES_ACTIVE=prod
-      # 关键：从 .env 文件中读取密码并注入
+      # 关键：从 .env 文件中读取密码并注入到容器中
+      # 你的 Spring 应用将使用这个环境变量来配置数据源
       - DB_PASSWORD=${DB_PASSWORD}
       # 通过设置TZ环境变量来指定时区
       - TZ=Asia/Shanghai
@@ -22,3 +26,56 @@ services:
       # 将宿主机当前目录下的 logs 文件夹 映射到 容器内的 /app/logs 文件夹
       # 语法: <宿主机路径>:<容器内路径>
       - ./logs:/app/logs
+    # 关键：添加 depends_on，确保应用在数据库准备就绪后才启动
+    depends_on:
+      postgres_prod:
+        # 等待 postgres_prod 服务的健康检查（healthcheck）状态变为 'healthy'
+        condition: service_healthy
+
+  # ------------------ 生产环境数据库 (Production) ------------------
+  postgres_prod:
+    image: postgres:15
+    container_name: prod_db
+    restart: always
+    # 安全的端口映射：仅允许服务器本机通过 5433 端口访问，用于从主机调试
+    ports:
+      - "127.0.0.1:5433:5432"
+    environment:
+      - POSTGRES_USER=prod_user
+      # 最佳实践：从 .env 文件中读取密码，与 app 服务保持一致，便于统一管理
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=market_data
+    volumes:
+      # 独立的数据卷，用于持久化存储生产数据
+      - prod_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prod_user -d market_data"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ------------------ 开发环境数据库 (Development) ------------------
+  # 注意：这个服务会和上面的一起启动，但你的 app 服务当前只依赖生产库
+  postgres_dev:
+    image: postgres:15
+    container_name: dev_db
+    restart: always
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      - POSTGRES_USER=dev_user
+      # 建议为开发环境也使用变量，或者使用一个简单的密码
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=market_data
+    volumes:
+      - dev_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user -d market_data_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# 在文件末尾统一定义数据卷，Docker 会自动创建它们
+volumes:
+  prod_db_data:
+  dev_db_data:
