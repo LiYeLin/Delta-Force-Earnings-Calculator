@@ -20,6 +20,7 @@ services:
       # 关键：从 .env 文件中读取密码并注入到容器中
       # 你的 Spring 应用将使用这个环境变量来配置数据源
       - DB_PASSWORD=${DB_PASSWORD}
+      - SEND_KEY=${SEND_KEY}
       # 通过设置TZ环境变量来指定时区
       - TZ=Asia/Shanghai
     volumes:
