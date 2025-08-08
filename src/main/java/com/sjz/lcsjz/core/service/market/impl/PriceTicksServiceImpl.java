@@ -9,11 +9,8 @@ import com.sjz.lcsjz.common.dal.mapper.PriceTicksMapper;
 import com.sjz.lcsjz.core.service.market.IItemsService;
 import com.sjz.lcsjz.core.service.market.IPriceTicksService;
 import jakarta.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionManager;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -31,8 +28,8 @@ import java.util.stream.Collectors;
  * @since 2025-07-29
  */
 @Service
+@Slf4j
 public class PriceTicksServiceImpl extends ServiceImpl<PriceTicksMapper, PriceTicks> implements IPriceTicksService {
-    private static final Logger log = LoggerFactory.getLogger(PriceTicksServiceImpl.class);
 
     @Resource
     private IItemsService itemsService;

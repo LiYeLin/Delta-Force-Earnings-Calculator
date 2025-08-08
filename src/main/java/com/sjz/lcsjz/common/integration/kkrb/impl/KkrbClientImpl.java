@@ -7,8 +7,7 @@ import com.sjz.lcsjz.common.integration.kkrb.KkrbClient;
 import com.sjz.lcsjz.common.integration.model.ItemPriceFlow;
 import com.sjz.lcsjz.common.integration.model.KkrbResp;
 import jakarta.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
@@ -22,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class KkrbClientImpl implements KkrbClient {
-    private static final Logger log = LoggerFactory.getLogger(KkrbClientImpl.class);
+
     private static final String pageUrl = "https://www.kkrb725.com/?viewpage=view%2Fcollection%2Fammo_package";
 
     @Resource
