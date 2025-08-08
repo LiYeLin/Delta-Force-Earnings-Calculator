@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -95,8 +96,13 @@ public class PriceTicksServiceImpl extends ServiceImpl<PriceTicksMapper, PriceTi
                 // 情况一: 记录不存在，加入插入列表
                 insertList.add(incomingTick);
             } else {
+                // 将新价格和旧价格都统一到业务要求的精度
+                // RoundingMode.HALF_UP 是最常用的“四舍五入”模式
+                BigDecimal normalizedIncomingPrice = incomingTick.getPrice().setScale(1, RoundingMode.HALF_UP);
+                BigDecimal normalizedExistingPrice = existTick.getPrice().setScale(1, RoundingMode.HALF_UP);
+
                 // 情况二: 记录已存在，需要进一步判断价格
-                if (!existTick.getPrice().equals(incomingTick.getPrice())) {
+                if (normalizedExistingPrice.compareTo(normalizedIncomingPrice) != 0) {
                     // 价格不同，加入更新列表
                     BigDecimal oldPrice = existTick.getPrice();
                     existTick.setPrice(incomingTick.getPrice()); // 修改从数据库查出来的持久化对象

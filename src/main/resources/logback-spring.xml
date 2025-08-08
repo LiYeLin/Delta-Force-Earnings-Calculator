@@ -99,21 +99,19 @@
     <springProfile name="!local">
         <!-- DAL (SQL) 日志记录器 -->
         <logger name="com.sjz.lcsjz.common.dal.mapper" level="DEBUG" additivity="false">
-            <appender-ref ref="CONSOLE"/> <!-- 【修改】同时输出到控制台 -->
             <appender-ref ref="DAL_FILE"/>
-            <appender-ref ref="ERROR_FILE"/>
         </logger>
 
         <!-- 定时任务日志记录器 -->
         <logger name="com.sjz.lcsjz.core.service.schedule" level="INFO" additivity="false">
-            <appender-ref ref="CONSOLE"/> <!-- 【修改】同时输出到控制台 -->
+            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="SCHEDULER_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </logger>
 
         <!-- Root Logger (根记录器) -->
         <root level="INFO">
-            <appender-ref ref="CONSOLE"/> <!-- 【修改】同时输出到控制台 -->
+            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="DEFAULT_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </root>
