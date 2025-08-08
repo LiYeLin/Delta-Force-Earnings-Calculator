@@ -10,8 +10,7 @@ import com.sjz.lcsjz.core.service.market.IMarketSnapshotsService;
 import com.sjz.lcsjz.core.service.market.IPriceTicksService;
 import com.sjz.lcsjz.core.service.market.impl.ItemsServiceImpl;
 import jakarta.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,8 +23,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class ItemPriceScheduler {
-    private static final Logger log = LoggerFactory.getLogger(ItemPriceScheduler.class);
     private static final DateTimeFormatter yyyyMMddHH = DateTimeFormatter.ofPattern("yyyyMMddHH");
 
     @Resource

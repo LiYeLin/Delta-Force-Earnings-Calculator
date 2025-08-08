@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sjz.lcsjz.common.dal.entity.Items;
 import com.sjz.lcsjz.common.dal.mapper.ItemsMapper;
 import com.sjz.lcsjz.core.service.market.IItemsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,8 +16,8 @@ import org.springframework.stereotype.Service;
  * @since 2025-07-29
  */
 @Service
+@Slf4j
 public class ItemsServiceImpl extends ServiceImpl<ItemsMapper, Items> implements IItemsService {
-    private static final Logger log = LoggerFactory.getLogger(ItemsServiceImpl.class);
 
     /**
      * 保存物品信息
