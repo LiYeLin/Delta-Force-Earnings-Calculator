@@ -8,6 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * 嘎嘎板正/嘎嘎权威/牛而逼之的启动类
+ *
+ */
 @SpringBootApplication
 @MapperScan("com.sjz.lcsjz.common.dal.mapper")
 @EnableScheduling
