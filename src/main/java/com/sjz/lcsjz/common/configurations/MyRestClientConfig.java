@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -44,5 +45,10 @@ public class MyRestClientConfig {
                 .defaultHeader("sec-fetch-site", "same-origin")
                 .defaultHeader("x-requested-with", "XMLHttpRequest")
                 .build();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
