@@ -22,7 +22,6 @@ public class MarketViewServiceImpl implements MarketViewService {
     private MarketViewMapper marketViewMapper;
 
     @Override
-    @Scheduled(cron = "0 10 0 * * ?")
     public void refreshDailyPercentilesView() {
         log.info("Starting to refresh materialized view: mv_daily_percentiles");
         try {
@@ -35,7 +34,6 @@ public class MarketViewServiceImpl implements MarketViewService {
     }
 
     @Override
-    @Scheduled(cron = "0 5 * * * ?")
     public void refreshBollingerBandsView() {
         log.info("Starting to refresh materialized view: mv_bollinger_bands");
         try {
