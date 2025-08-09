@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -59,7 +60,8 @@ public class AnalyzeItemsScheduler {
                     // 打印日志，表示分析物品价格完成
                     log.info("【物品价格分析】【success】分析物品价格完成，itemName: {},结果：{}", item.getItemName(), analyzeRecord);
                     return analyzeRecord;
-                }).filter(analyzeRecord -> !Signal.HOLD.equals(analyzeRecord.signal()))
+                }).filter(Objects::nonNull)
+                .filter(analyzeRecord -> !Signal.HOLD.equals(analyzeRecord.signal()))
                 .toList();
 
         log.info("【物品价格分析】【end】分析物品价格完成,处理时间:{}ms", System.currentTimeMillis() - l);
