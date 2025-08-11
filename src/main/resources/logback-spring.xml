@@ -75,6 +75,20 @@
         </encoder>
     </appender>
 
+
+    <!-- 分析模块的日志文件 -->
+    <appender name="ANALYZE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/scheduler.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/analyze.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
     <!-- 3. 配置 Logger (根据环境区分) -->
 
     <!-- =================== 本地开发环境 (local profile) =================== -->
@@ -108,7 +122,12 @@
             <appender-ref ref="SCHEDULER_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </logger>
-
+        <!-- 定时任务日志记录器 -->
+        <logger name="DecisionLogger" level="INFO" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ANALYZE_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </logger>
         <!-- Root Logger (根记录器) -->
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>

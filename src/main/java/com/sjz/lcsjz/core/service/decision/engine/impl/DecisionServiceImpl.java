@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
+@Slf4j(topic = "DecisionLogger")
 public class DecisionServiceImpl implements DecisionService {
     // 新建guava缓存 key: itemName value: AnalyzeRecord
     public static Cache<String, AnalyzeRecord> ANALYZE_CACHE = CacheBuilder.newBuilder()
@@ -44,7 +44,6 @@ public class DecisionServiceImpl implements DecisionService {
     @Override
     public AnalyzeRecord analyzeSingleItem(Items item) {
         Long itemId = item.getId();
-        log.debug("Analyzing item: {}", item.getItemName());
 
         // 1. 从查询服务获取预计算好的数据 (拉取30天确保有足够数据计算指标)
         List<BollingerBandDTO> bbandsData = marketViewQueryService.queryBollingerBands(itemId, 30);
@@ -52,9 +51,10 @@ public class DecisionServiceImpl implements DecisionService {
 
         // 数据完整性校验
         if (bbandsData.isEmpty() || percentileData == null || bbandsData.size() < 26) { // 26是EMA最长周期
-            log.warn("物品 [id={}, name={}] 的数据不足，跳过分析。", itemId, item.getItemName());
+            log.warn("【分析模块】【异常】物品 [id={}, name={}] 的数据不足，跳过分析。", itemId, item.getItemName());
             throw new IllegalArgumentException("数据不足以分析");
         }
+        log.debug("【分析模块】【开始】item: {}，布林带数据{},百分位数据{}", item.getItemName(), bbandsData, percentileData);
 
         // 2. 在Java内存中计算EMA和RSI
         List<BigDecimal> prices = bbandsData.stream().map(BollingerBandDTO::price).collect(Collectors.toList());
@@ -89,7 +89,7 @@ public class DecisionServiceImpl implements DecisionService {
         AnalyzeRecord response = new AnalyzeRecord(item, finalSignal, context, LocalDateTime.now());
         ANALYZE_CACHE.put(item.getItemName(), response);
         // jackson json打印response
-        log.info("Analyze result: {}", response);
+        log.info("【分析模块】【结束】结论：{}，上下文{}", finalSignal, response);
         return response;
     }
 }
