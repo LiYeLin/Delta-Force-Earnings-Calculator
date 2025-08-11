@@ -77,7 +77,7 @@ public class ItemPriceScheduler {
                 return priceTicks;
             }).toList();
             // 保存价格快照到数据库
-            priceTicksService.savePriceTicksBatch(priceTicksList);
+            priceTicksService.upsertPriceTicksBatch(priceTicksList);
             log.info("【物品价格数据Scheduler】物品{} 价格快照保存完成，共{}条", item.getItemName(), priceTicksList.size());
         }
         log.info("===【物品价格数据Scheduler】【结束】===");

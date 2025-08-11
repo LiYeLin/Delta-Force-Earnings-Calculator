@@ -2,6 +2,7 @@ package com.sjz.lcsjz.common.dal.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -57,13 +58,15 @@ public class Items implements Serializable {
      * 记录创建时间
      */
     @ApiModelProperty("记录创建时间")
-    private OffsetDateTime gmtCreate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime gmtCreate;
 
     /**
      * 记录最后修改时间
      */
     @ApiModelProperty("记录最后修改时间")
-    private OffsetDateTime gmtModified;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime gmtModified;
 
     /**
      * 判断当前对象是否与另一个对象相等

@@ -3,6 +3,7 @@ package com.sjz.lcsjz.common.dal.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,17 +33,30 @@ public class UserHolding implements Serializable {
 
     private Long itemId;
 
+    /**
+     * 平均成本价
+     */
+    private Integer avgCostPrice;
+    /**
+     * 总数量
+     */
+    private Integer totalAmount;
+    /**
+     * 目标卖出价
+     */
+    private Integer targetSellPrice;
+    /**
+     * 止损价
+     */
+    private Integer stopLossPrice;
+    /**
+     * 状态
+     */
+    private String status;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtCreate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime gmtModified;
-
-    private Integer avgCostPrice;
-
-    private Integer totalAmount;
-
-    private Integer targetSellPrice;
-
-    private Integer stopLossPrice;
-
-    private String status;
 }

@@ -13,7 +13,6 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 /**
  * <p>
@@ -54,7 +53,7 @@ public class PriceTicks implements Serializable {
     @ApiModelProperty("该时间点的价格")
     private BigDecimal price;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private OffsetDateTime gmtCreate;
+    private LocalDateTime gmtCreate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private OffsetDateTime gmtModified;
+    private LocalDateTime gmtModified;
 }

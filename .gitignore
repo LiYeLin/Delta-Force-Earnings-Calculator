@@ -42,3 +42,4 @@ logs/*.log.*
 /lcsjz/src/main/resources/application-local.properties
 /logs/
 /target/
+/src/main/java/com/sjz/lcsjz/common/dal/generator/CodeGenerator.java

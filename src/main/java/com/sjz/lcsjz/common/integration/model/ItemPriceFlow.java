@@ -2,6 +2,8 @@ package com.sjz.lcsjz.common.integration.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.sjz.lcsjz.common.dal.serializer.BigDecimal8DigitSerializer;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -29,14 +31,17 @@ public class ItemPriceFlow {
      * 当前价格（含税）
      */
     @JsonProperty("currectPrice")
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal currentPrice;
     /**
      * 本周最高价（含税）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal thisWeekHighestPrice;
     /**
      * 本周最高价（税后）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal thisWeekHighestPriceAfterTax;
     /**
      * 本周最高价出现时间（格式：yyyy-MM-dd HH:mm:ss）
@@ -46,14 +51,17 @@ public class ItemPriceFlow {
     /**
      * 本周价格涨跌幅（相比上周）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal thisWeekPriceOffset;
     /**
      * 上周最高价（含税）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal lastWeekHighestPrice;
     /**
      * 上周最高价（税后）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal lastWeekHighestPriceAfterTax;
     /**
      * 上周最高价出现时间（格式：yyyy-MM-dd HH:mm:ss）
@@ -63,10 +71,12 @@ public class ItemPriceFlow {
     /**
      * 上周最低价（含税）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal lastWeekLowestPrice;
     /**
      * 上周最低价（税后）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal lastWeekLowestPriceAfterTax;
     /**
      * 上周最低价出现时间（格式：yyyy-MM-dd HH:mm:ss）
@@ -76,14 +86,17 @@ public class ItemPriceFlow {
     /**
      * 上周价格涨跌幅
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal lastWeekPriceOffset;
     /**
      * 昨日最高价（含税）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal yesterdayHighestPrice;
     /**
      * 昨日最高价（税后）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal yesterdayHighestPriceAfterTax;
     /**
      * 昨日最高价出现时间（自然语言描述，如"凌晨0点"）
@@ -92,10 +105,12 @@ public class ItemPriceFlow {
     /**
      * 昨日最低价（含税）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal yesterdayLowestPrice;
     /**
      * 昨日最低价（税后）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal yesterdayLowestPriceAfterTax;
     /**
      * 昨日最低价出现时间（自然语言描述，如"晚上8点"）
@@ -104,13 +119,16 @@ public class ItemPriceFlow {
     /**
      * 昨日价格涨跌幅（含税）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal yesterdayPriceOffset;
     /**
      * 昨日价格涨跌幅（不含税）
      */
+    @JsonDeserialize(using = BigDecimal8DigitSerializer.class)
     private BigDecimal yesterdayPriceOffsetWithoutTax;
     /**
      * 价格曲线数据（Key为时间戳格式yyyyMMddHH，Value为价格）
      */
+    @JsonDeserialize(contentUsing = BigDecimal8DigitSerializer.class)
     private Map<String, BigDecimal> priceCurve;
 }
