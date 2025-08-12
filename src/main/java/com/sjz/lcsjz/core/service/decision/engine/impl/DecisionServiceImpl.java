@@ -72,6 +72,7 @@ public class DecisionServiceImpl implements DecisionService {
         //         .orElse(null);
 
         IndicatorContext context = new IndicatorContext(
+                item,
                 null,
                 lastBbandData.price(),
                 percentileData.p20Price(),
@@ -89,7 +90,7 @@ public class DecisionServiceImpl implements DecisionService {
         AnalyzeRecord response = new AnalyzeRecord(item, finalSignal, context, LocalDateTime.now());
         ANALYZE_CACHE.put(item.getItemName(), response);
         // jackson json打印response
-        log.info("【分析模块】【结束】结论：{}，上下文{}", finalSignal, response);
+        log.info("【分析模块】【结束】物品：{},结论：{}，上下文{}", item.getItemName(), finalSignal, response);
         return response;
     }
 }
