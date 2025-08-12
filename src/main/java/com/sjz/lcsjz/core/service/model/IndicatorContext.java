@@ -1,11 +1,13 @@
 package com.sjz.lcsjz.core.service.model;
 
 
+import com.sjz.lcsjz.common.dal.entity.Items;
 import org.springframework.lang.Nullable;
 
 import java.math.BigDecimal;
 
 public record IndicatorContext(
+        Items item,
         // 持仓信息
         @Nullable
         HoldingPositionDetail holdingPositionDetail,

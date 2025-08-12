@@ -6,6 +6,7 @@ import com.sjz.lcsjz.core.service.model.IndicatorContext;
 import com.sjz.lcsjz.core.service.model.Signal;
 import com.sjz.lcsjz.core.service.signa.SignalGeneratorService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j(topic = "DecisionLogger")
 public class SignalGeneratorServiceImpl implements SignalGeneratorService {
 
     /**
@@ -30,12 +32,18 @@ public class SignalGeneratorServiceImpl implements SignalGeneratorService {
      */
     @Override
     public Signal generateSignal(IndicatorContext context) {
+        int sellScore = generateSellScore(context);
+        int buyScore = generateBuyScore(context);
+        int sellThreshold = getThreshold("DEFAULT_SELL");
+        int buyThreshold = getThreshold("DEFAULT_BUY");
+        log.info("[信号生成], 物品：{},卖出分: {}, 卖出阈值: {}, 买入分: {}, 买入阈值: {}",
+                context.item().getItemName(), sellScore, sellThreshold, buyScore, buyThreshold);
         // 首先判断卖出信号
-        if (context.holdingPositionDetail() != null && generateSellScore(context) >= getThreshold("DEFAULT_SELL")) {
+        if (context.holdingPositionDetail() != null && sellScore >= sellThreshold) {
             return Signal.SELL;
         }
         // 再判断买入信号
-        if (generateBuyScore(context) >= getThreshold("DEFAULT_BUY")) {
+        if (buyScore >= buyThreshold) {
             return Signal.BUY;
         }
         // 默认为持有
